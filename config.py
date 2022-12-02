@@ -4,12 +4,17 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     ENV: str = "dev"
     PROJECT_NAME: str = "perfect-evolution"
+    PROJECT_TITLE: str = "perfect-evolution"
     PROJECT_DESCRIPTION: str = "kahoot application"
     PROJECT_VERSION: str = "1.0.0"
 
     ENCODING: str = 'utf-8'
-
-    API_V1_PREFIX: str = "/api/v1" 
+    
+    ADMIN_TITLE: str = "Admin microservice application"
+    ADMIN_DESCRIPTION: str = "Admin microservice application description"
+    PRIMARY_API_V1_PREFIX: str = "/api/v1"
+    AUTH_API_V1_PREFIX: str = "/api/v1/auth"
+    ADMIN_API_V1_PREFIX: str = "/api/v1/admin" 
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_SECRET_KEY: str = "MySuperSecret"
     JWT_REFRESH_SECRET_KEY: str = "MySuperSecretRefresh"

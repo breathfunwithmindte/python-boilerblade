@@ -8,18 +8,23 @@ class BaseException(Exception):
     status_type: str
     message: str
     data: object
+    errors: list
     
-    def __init__(self, data: object={}) -> None:
+    def __init__(self, errors: list[object] = [], data: object={}) -> None:
         self.data = data
+        self.errors = errors
         super().__init__()
     
     def response (self):
-        return {
+        response_object = {
             "status": self.status,
             "status_type": self.status_type,
             "message": self.message,
             "data": self.data
         }
+        if len(self.errors) != 0 :
+            response_object["errors"] = self.errors
+        return response_object
     
 # @implements BaseException - 400
 class BadRequestException(BaseException):
@@ -45,7 +50,8 @@ class ForbiddenException(BaseException):
     status = HTTPStatus.FORBIDDEN.value
     status_type = HTTPStatus.METHOD_NOT_ALLOWED.name
     message = HTTPStatus.METHOD_NOT_ALLOWED.phrase
-    
+
+# @implements BaseException - 500
 class InternalServerErrorException(BaseException):
     status = HTTPStatus.INTERNAL_SERVER_ERROR.value
     status_type = HTTPStatus.INTERNAL_SERVER_ERROR.name
